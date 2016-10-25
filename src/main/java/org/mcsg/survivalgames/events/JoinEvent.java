@@ -48,6 +48,9 @@ public class JoinEvent implements Listener {
                 }
             }, 60L);
         }
+
+        // Automatically join the arena "sg"
+        p.performCommand("sg join sg");
     }
 
 }
