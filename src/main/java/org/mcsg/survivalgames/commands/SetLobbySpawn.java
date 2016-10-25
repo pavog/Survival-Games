@@ -6,7 +6,6 @@ import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.SettingsManager;
 
 
-
 public class SetLobbySpawn implements SubCommand {
 
     public boolean onCommand(Player player, String[] args) {
@@ -18,12 +17,12 @@ public class SetLobbySpawn implements SubCommand {
         MessageManager.getInstance().sendFMessage(PrefixType.INFO, "info.lobbyspawn", player);
         return true;
     }
-    
+
     public String help(Player p) {
         return "/sg setlobbyspawn - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.setlobbyspawn", "Set the lobby spawnpoint");
     }
 
-	public String permission() {
-		return "sg.admin.setlobby";
-	}
+    public String permission() {
+        return "sg.admin.setlobby";
+    }
 }

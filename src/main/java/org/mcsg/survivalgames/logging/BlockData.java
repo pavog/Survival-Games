@@ -1,34 +1,31 @@
 package org.mcsg.survivalgames.logging;
 
-import java.io.Serializable;
-
 import org.bukkit.inventory.ItemStack;
+
+import java.io.Serializable;
 
 public class BlockData implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String world;
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private String world;
     private int previd;
     private int newid;
-    private byte prevdata,newdata;
-    private int x,y,z;
+    private byte prevdata, newdata;
+    private int x, y, z;
     private int gameid;
     private ItemStack[] items;
-    
+
     /**
-     * 
      * @param previd
      * @param newid
      * @param x
      * @param y
-     * @param z
-     * 
-     * Provides a object for holding the data for block changes
+     * @param z      Provides a object for holding the data for block changes
      */
-    public BlockData(int gameid, String world, int previd,byte prevdata, int newid,byte newdata, int x, int y, int z, ItemStack[] items){
+    public BlockData(int gameid, String world, int previd, byte prevdata, int newid, byte newdata, int x, int y, int z, ItemStack[] items) {
         this.gameid = gameid;
         this.world = world;
         this.previd = previd;
@@ -40,12 +37,12 @@ public class BlockData implements Serializable {
         this.z = z;
         this.items = items;
     }
-    
-    public int getGameId(){
+
+    public int getGameId() {
         return gameid;
     }
-    
-    public String getWorld(){
+
+    public String getWorld() {
         return world;
     }
 
@@ -76,8 +73,8 @@ public class BlockData implements Serializable {
     public int getZ() {
         return z;
     }
-    
-    public ItemStack[] getItems(){
-    	return items;
+
+    public ItemStack[] getItems() {
+        return items;
     }
 }

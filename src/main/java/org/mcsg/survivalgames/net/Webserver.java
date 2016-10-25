@@ -1,16 +1,16 @@
 package org.mcsg.survivalgames.net;
 
+import org.mcsg.survivalgames.SurvivalGames;
+
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import org.mcsg.survivalgames.SurvivalGames;
 
 
 public class Webserver extends Thread {
 
     public void run() {
-        try{
-        ServerSocket st =  new ServerSocket(880);
+        try {
+            ServerSocket st = new ServerSocket(880);
 
             while (!SurvivalGames.isDisabling()) {
 
@@ -19,10 +19,10 @@ public class Webserver extends Thread {
                 // Spin off request to a new thread to be handled
                 Connection c = new Connection(skt);
                 c.start();
-               // st.close();
+                // st.close();
             }
             st.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
         }

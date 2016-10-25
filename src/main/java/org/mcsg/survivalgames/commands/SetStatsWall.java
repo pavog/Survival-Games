@@ -5,7 +5,6 @@ import org.mcsg.survivalgames.SettingsManager;
 import org.mcsg.survivalgames.stats.StatsWallManager;
 
 
-
 public class SetStatsWall implements SubCommand {
 
     public boolean onCommand(Player player, String[] args) {
@@ -13,12 +12,12 @@ public class SetStatsWall implements SubCommand {
         return false;
     }
 
-    
-    public String help(Player p){
-        return "/sg setstatswall - "+ SettingsManager.getInstance().getMessageConfig().getString("messages.help.setstatswall", "Sets the stats wall");
+
+    public String help(Player p) {
+        return "/sg setstatswall - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.setstatswall", "Sets the stats wall");
     }
 
-	public String permission() {
-		return null;
-	}
+    public String permission() {
+        return null;
+    }
 }

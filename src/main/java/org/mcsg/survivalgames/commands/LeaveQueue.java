@@ -5,8 +5,7 @@ import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.SettingsManager;
 
 
-
-public class LeaveQueue implements SubCommand{
+public class LeaveQueue implements SubCommand {
 
     public boolean onCommand(Player player, String[] args) {
         GameManager.getInstance().removeFromOtherQueues(player, -1);
@@ -17,8 +16,8 @@ public class LeaveQueue implements SubCommand{
         return "/sg lq - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leavequeue", "Leave the queue for any queued games");
     }
 
-	public String permission() {
-		return null;
-	}
+    public String permission() {
+        return null;
+    }
 
 }

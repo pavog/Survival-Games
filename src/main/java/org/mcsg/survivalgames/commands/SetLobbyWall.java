@@ -1,17 +1,14 @@
 package org.mcsg.survivalgames.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.mcsg.survivalgames.LobbyManager;
 import org.mcsg.survivalgames.SettingsManager;
 
 
-
-public class SetLobbyWall implements SubCommand{
+public class SetLobbyWall implements SubCommand {
 
     public boolean onCommand(Player player, String[] args) {
-    	//player.sendMessage(ChatColor.RED+"This command has been replaced by /sg addwall <arenaid>");
-    	return true;/*
+        //player.sendMessage(ChatColor.RED+"This command has been replaced by /sg addwall <arenaid>");
+        return true;/*
         if(!player.hasPermission("sg.admin.setlobby") && !player.isOp()){
             player.sendMessage(ChatColor.RED+"No Permission");
             return true;
@@ -28,9 +25,9 @@ public class SetLobbyWall implements SubCommand{
         return "/sg addwall <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addwall", "Add a lobby stats wall for Arena <id>");
     }
 
-	public String permission() {
-		return "sg.admin.setlobby";
-	}
+    public String permission() {
+        return "sg.admin.setlobby";
+    }
 
     //TODO: TAKE A W.E SELECTIONA AND SET THE LOBBY. ALSO SET LOBBY WALL
 }

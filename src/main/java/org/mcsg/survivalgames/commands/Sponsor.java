@@ -4,13 +4,12 @@ import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.MessageManager;
 
 
-
 public class Sponsor implements SubCommand {
 
-	MessageManager msgmgr = MessageManager.getInstance();
-	
-	public boolean onCommand(Player player, String[] args) {
-	/*	if (!player.hasPermission("sg.player.sponsor") && !player.isOp()) {
+    MessageManager msgmgr = MessageManager.getInstance();
+
+    public boolean onCommand(Player player, String[] args) {
+    /*	if (!player.hasPermission("sg.player.sponsor") && !player.isOp()) {
             player.sendMessage(ChatColor.RED + "No Permission");
             return true;
         }
@@ -65,14 +64,14 @@ public class Sponsor implements SubCommand {
 		
 		
 		/* NOT USED */
-		return true;
-	}
+        return true;
+    }
 
-	public String help(Player p) {
-		return "/sg sponsor <player> <itemid> <amount> - Sponsor a player!";
-	}
+    public String help(Player p) {
+        return "/sg sponsor <player> <itemid> <amount> - Sponsor a player!";
+    }
 
-	public String permission() {
-		return "sg.player.sponsor";
-	}
+    public String permission() {
+        return "sg.player.sponsor";
+    }
 }

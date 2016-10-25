@@ -1,29 +1,32 @@
 package org.mcsg.survivalgames;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Sign;
 
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.bukkit.selections.Selection;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class LobbyManagerOld implements Listener {
 
+    private static LobbyManagerOld instance = new LobbyManagerOld();
+    public HashSet<Chunk> lobbychunks = new HashSet<Chunk>();
     //TODO: Possibly clean up
     Sign[][] signs;
     SurvivalGames p;
-    private static LobbyManagerOld instance = new LobbyManagerOld();
-    public HashSet < Chunk > lobbychunks = new HashSet < Chunk > ();
+    boolean showingMessage = false;
+    ArrayList<String[]> messagequeue = new ArrayList<String[]>(3);
+    int tid = 0;
+    private boolean error;
 
     private LobbyManagerOld() {
 
@@ -33,7 +36,6 @@ public class LobbyManagerOld implements Listener {
         return instance;
 
     }
-
 
     public void setup(SurvivalGames p) {
         this.p = p;
@@ -94,7 +96,7 @@ public class LobbyManagerOld implements Listener {
                 else l = l.add(0, 0, inc);
                 //l.getBlock().setTypeId(323);
             }
-            l = l.add(0, - 1, 0);
+            l = l.add(0, -1, 0);
             if (inc == -1) {
                 l.setX(x1);
                 l.setZ(z1);
@@ -103,8 +105,8 @@ public class LobbyManagerOld implements Listener {
                 l.setZ(z2);
             }
         }
-        showMessage(new String[] {
-            "", "Survival Games", "", "Double0negative", "iMalo", "mc-sg.org", ""
+        showMessage(new String[]{
+                "", "Survival Games", "", "Double0negative", "iMalo", "mc-sg.org", ""
         });
 
         // try{Thread.sleep(4000);}catch(Exception e){}
@@ -114,12 +116,10 @@ public class LobbyManagerOld implements Listener {
         double x = (signs[0].length * 8);
         double y = (signs.length * 2);
 
-        return new int[] {
-            (int) x, (int) y
+        return new int[]{
+                (int) x, (int) y
         };
     }
-
-
 
     public void setLobbySignsFromSelection(Player pl) {
         FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
@@ -158,32 +158,15 @@ public class LobbyManagerOld implements Listener {
 
     }
 
-    boolean showingMessage = false;
-    ArrayList < String[] > messagequeue = new ArrayList < String[] > (3);
-    private boolean error;
-
     public void showMessage(String[] msg9) {
         // new ThreadMessageDisplay(msg9).start();
         signShowMessage(msg9);
-    }
-
-    class ThreadMessageDisplay extends Thread {
-        String[] message;
-
-        ThreadMessageDisplay(String[] msg) {
-            message = msg;
-        }
-
-        public void run() {
-            signShowMessage(message);
-        }
     }
 
     public void signShowMessage(String[] msg) {
         signShowMessage(msg, 5000);
     }
 
-    int tid = 0;
     public void signShowMessage(String[] msg9, long wait) {
 
         messagequeue.add(msg9);
@@ -276,24 +259,6 @@ public class LobbyManagerOld implements Listener {
         showingMessage = false;
     }
 
-
-    class LobbySignUpdater implements Runnable {
-        public void run() {
-            //this.setName("[SurvivalGames] Lobby signs updater");
-            /*int trun = runningThread;
-
-            while(SurvivalGames.isActive() && trun == runningThread){*/
-            updateGameStatus();
-
-            /* try{
-                    try{Thread.sleep(1000);}catch(Exception e){}
-                }catch(Exception e){e.printStackTrace(); signs[0][0].setLine(1, ChatColor.RED+"ERROR");signs[0][0].setLine(1, ChatColor.RED+"Check Console");}*/
-
-        }
-    }
-
-
-
     public void updateGameStatus() {
         // clearSigns();
         int b = signs.length - 1;
@@ -329,7 +294,7 @@ public class LobbyManagerOld implements Listener {
             return;
 
         }
-        ArrayList < Game > games = GameManager.getInstance().getGames();
+        ArrayList<Game> games = GameManager.getInstance().getGames();
         // System.out.println(games.toString());
         for (int a = 0; a < games.size(); a++) {
             try {
@@ -358,7 +323,7 @@ public class LobbyManagerOld implements Listener {
                 int line = 0;
                 Player[] active = game.getPlayers()[0];
                 Player[] inactive = game.getPlayers()[1];
-                for (Player p: active) {
+                for (Player p : active) {
                     if (signno < signs[b].length) {
 
                         signs[b][signno].setLine(line, (SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_BLUE : ChatColor.BLACK) + ((p.getName().equalsIgnoreCase("Double0negative")) ? "Double0" : p.getName()));
@@ -371,7 +336,7 @@ public class LobbyManagerOld implements Listener {
                         }
                     }
                 }
-                for (Player p: inactive) {
+                for (Player p : inactive) {
                     if (signno < signs[b].length) {
                         signs[b][signno].setLine(line, (SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED : ChatColor.GRAY) + ((p.getName().equalsIgnoreCase("Double0negative")) ? "Double0" : p.getName()));
                         signs[b][signno].update();
@@ -395,8 +360,6 @@ public class LobbyManagerOld implements Listener {
 
     }
 
-
-
     public void clearSigns() {
         try {
             for (int y = signs.length - 1; y != -1; y--) {
@@ -412,11 +375,39 @@ public class LobbyManagerOld implements Listener {
 
                 }
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     public void error(boolean e) {
         error = e;
+    }
+
+    class ThreadMessageDisplay extends Thread {
+        String[] message;
+
+        ThreadMessageDisplay(String[] msg) {
+            message = msg;
+        }
+
+        public void run() {
+            signShowMessage(message);
+        }
+    }
+
+    class LobbySignUpdater implements Runnable {
+        public void run() {
+            //this.setName("[SurvivalGames] Lobby signs updater");
+            /*int trun = runningThread;
+
+            while(SurvivalGames.isActive() && trun == runningThread){*/
+            updateGameStatus();
+
+            /* try{
+                    try{Thread.sleep(1000);}catch(Exception e){}
+                }catch(Exception e){e.printStackTrace(); signs[0][0].setLine(1, ChatColor.RED+"ERROR");signs[0][0].setLine(1, ChatColor.RED+"Check Console");}*/
+
+        }
     }
 
 }

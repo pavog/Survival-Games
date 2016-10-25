@@ -1,8 +1,6 @@
 package org.mcsg.survivalgames.logging;
 
 
-
-
 public class QueueManagerOld1 {
 
  /*   private static QueueManagerOld instance = new QueueManagerOld();
