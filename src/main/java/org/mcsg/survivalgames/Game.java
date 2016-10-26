@@ -1,5 +1,6 @@
 package org.mcsg.survivalgames;
 
+import com.google.common.io.ByteArrayDataOutput;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -683,6 +684,21 @@ public class Game {
         LobbyManager.getInstance().clearSigns(gameID);
         LobbyManager.getInstance().updateWall(gameID);
 
+        for (final Player player : Bukkit.getOnlinePlayers())
+            this.sendPlayerToOtherServer(player, "hub");
+
+        Bukkit.shutdown();
+    }
+
+    private void sendPlayerToOtherServer(Player player, String serverName) {
+        ByteArrayDataOutput localByteArrayDataOutput = com.google.common.io.ByteStreams.newDataOutput();
+        try {
+            localByteArrayDataOutput.writeUTF("Connect");
+            localByteArrayDataOutput.writeUTF(serverName);
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+        player.sendPluginMessage(SurvivalGames.getInstance(), "BungeeCord", localByteArrayDataOutput.toByteArray());
     }
 
     /*

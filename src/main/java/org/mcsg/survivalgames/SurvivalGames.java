@@ -31,10 +31,12 @@ public class SurvivalGames extends JavaPlugin {
     public static List<String> auth = Arrays.asList(new String[]{
             "Double0negative", "iMalo", "Medic0987", "alex_markey", "skitscape", "AntVenom", "YoshiGenius", "pimpinpsp", "WinryR", "Jazed2011",
             "KiwiPantz", "blackracoon", "CuppingCakes", "4rr0ws", "Fawdz", "Timothy13", "rich91", "ModernPrestige", "Snowpool", "egoshk",
-            "nickm140", "chaseoes", "Oceangrass", "GrailMore", "iAngelic", "Lexonia", "ChaskyT", "Anon232", "IngeniousGamer", "ThunderGemios10", "sshipway", "HeroCC" // List of Contributors
+            "nickm140", "chaseoes", "Oceangrass", "GrailMore", "iAngelic", "Lexonia", "ChaskyT", "Anon232", "IngeniousGamer", "ThunderGemios10",
+            "sshipway", "HeroCC", "EvilCodes" // List of Contributors
     });
     private static File datafolder;
     private static boolean disabling = false;
+    private static SurvivalGames instance = null;
     SurvivalGames p = this;
 
     public static File getPluginDataFolder() {
@@ -75,6 +77,10 @@ public class SurvivalGames extends JavaPlugin {
             debug(a + "");
     }
 
+    public static SurvivalGames getInstance() {
+        return instance;
+    }
+
     public void onDisable() {
         disabling = false;
         PluginDescriptionFile pdfFile = p.getDescription();
@@ -93,7 +99,10 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     public void onEnable() {
+        instance = this;
         logger = p.getLogger();
+
+        Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         //ensure that all worlds are loaded. Fixes some issues with Multiverse loading after this plugin had started
         getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
